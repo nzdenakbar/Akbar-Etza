@@ -1134,6 +1134,89 @@ img, svg, video{
   }
 }
 
+
+/* =========================================================
+   V3 — CENTER/RIGHT BALANCE FIX
+   Memastikan HERO memakai lebar viewport sebenarnya (100vw),
+   bukan lebar parent yang bisa lebih sempit di Safari/iPhone.
+   Ini yang menyebabkan komposisi pada screenshot terasa
+   menumpuk ke kiri dan sisi kanan terlalu kosong.
+   ========================================================= */
+
+@media (max-width:600px){
+  /* Paksa hero selebar layar perangkat. */
+  .hero{
+    width:100vw;
+    max-width:100vw;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+    padding-left:0;
+    padding-right:0;
+  }
+
+  .hero-scene{
+    width:100vw;
+    max-width:none;
+    margin:0;
+    left:0;
+  }
+
+  /* Titik tengah visual digeser sedikit ke kanan.
+     Bukan seluruh halaman, hanya komponen hero. */
+  .rainbow3d{
+    left:calc(50% + 12px);
+  }
+
+  .hero-title{
+    left:calc(50% + 12px);
+  }
+
+  .bear-wrap{
+    left:calc(50% + 12px);
+  }
+
+  .scroll{
+    left:calc(50% + 12px);
+  }
+
+  /* Bunga sebagai frame sudut: cukup kecil agar tidak
+     terpotong, tetapi tetap terlihat jelas. */
+  .flower{
+    width:clamp(128px,32vw,150px);
+    top:1%;
+  }
+
+  .flower.left{
+    left:-3px;
+  }
+
+  .flower.right{
+    right:-3px;
+  }
+
+  /* Awan mengikuti batas layar, tidak mendorong layout. */
+  .c1{left:-20px}
+  .c2{right:-20px}
+  .c3{left:10px}
+  .c4{right:10px}
+}
+
+@media (max-width:380px){
+  .rainbow3d,
+  .hero-title,
+  .bear-wrap,
+  .scroll{
+    left:calc(50% + 8px);
+  }
+
+  .flower{
+    width:125px;
+  }
+
+  .flower.left{left:-2px}
+  .flower.right{right:-2px}
+}
+
 </style>
 </head>
 <body class="locked">
