@@ -568,41 +568,6 @@ footer{text-align:center;padding:35px;padding-bottom:calc(35px + env(safe-area-i
  .orbit-card{width:64px;height:88px;margin:-44px 0 0 -32px}
  .planet-typewriter{font-size:13px;min-height:60px}
 }
-/* ===== FINAL MOBILE HERO BALANCE =====
-   The original .hero inherited 6vw horizontal padding.
-   On phones this shrank .hero-scene to about 88vw, so the
-   entire visual composition looked shifted left with a large
-   empty area on the right. Keep other sections untouched and
-   make ONLY the hero use the full viewport width. */
-@media(max-width:600px){
- .hero{
-   width:100%;
-   padding-left:0;
-   padding-right:0;
-   overflow:hidden;
- }
- .hero-scene{
-   width:100%;
-   max-width:none;
-   margin:0;
- }
- .rainbow3d{
-   left:50%;
-   width:94vw;
- }
- .hero-title{
-   left:50%;
-   width:min(440px,88vw);
- }
- .flower{
-   width:110px;
- }
- .flower.left{left:0}
- .flower.right{right:0}
- .bear-wrap{left:50%}
- .scroll{left:50%}
-}
-
 @media(max-width:380px){
  section{padding:60px 14px}
  .hero-scene{height:580px;min-height:540px}
@@ -618,6 +583,151 @@ footer{text-align:center;padding:35px;padding-bottom:calc(35px + env(safe-area-i
 }
 @media(max-height:640px) and (max-width:600px){
  .hero-scene{height:auto;min-height:520px}
+}
+
+/* =========================================================
+   UNIVERSAL MOBILE RESPONSIVE OVERRIDE — AKBAR & ETZA
+   Target: phones from ~320px to large phones, portrait/landscape.
+   Only landing-page sections are adjusted here. Gate/game layouts
+   remain untouched.
+   ========================================================= */
+@media (max-width: 600px){
+  html,body{width:100%;min-width:0;overflow-x:hidden}
+  body{font-size:clamp(12px,3.5vw,14px)}
+  section{width:100%;padding-inline:clamp(14px,4.5vw,24px);overflow:hidden}
+
+  /* NAV: fit every phone without forcing horizontal overflow */
+  nav{left:50%;width:calc(100% - 16px);max-width:none;padding:7px 8px;gap:4px}
+  .navlinks{width:100%;justify-content:center;gap:clamp(2px,1.2vw,8px)}
+  .navlinks a{font-size:clamp(8px,2.45vw,11px);padding:8px clamp(5px,1.8vw,10px);white-space:nowrap}
+
+  /* ================= HOME / HERO ================= */
+  .hero{
+    width:100%;
+    min-height:100svh;
+    padding:clamp(62px,15vw,86px) 0 clamp(28px,8vw,50px);
+    display:block;
+    overflow:hidden;
+  }
+  .hero-scene{
+    width:100%;
+    max-width:none;
+    height:clamp(590px,82svh,720px);
+    min-height:590px;
+    margin:0 auto;
+    overflow:visible;
+  }
+
+  /* Rainbow is sized from the viewport, never from a padded parent. */
+  .rainbow3d{left:50%;top:clamp(18px,3vh,30px);width:min(94vw,620px);height:auto}
+  .r1{width:100%;height:auto;aspect-ratio:2/1;border-width:clamp(20px,6vw,32px)}
+  .r2{width:91%;height:auto;aspect-ratio:2/1;border-width:clamp(19px,5.7vw,31px)}
+  .r3{width:82%;height:auto;aspect-ratio:2/1;border-width:clamp(18px,5.4vw,30px)}
+  .r4{width:73%;height:auto;aspect-ratio:2/1;border-width:clamp(17px,5.1vw,29px)}
+  .r5{width:64%;height:auto;aspect-ratio:2/1;border-width:clamp(16px,4.8vw,27px)}
+  .r6{width:55%;height:auto;aspect-ratio:2/1;border-width:clamp(15px,4.5vw,25px)}
+  .rainbow-shadow{top:clamp(285px,44vw,370px);width:min(72vw,460px);height:55px}
+
+  /* Clouds stay symmetrical around the actual viewport center. */
+  .cloud3d{width:clamp(82px,24vw,125px);height:clamp(32px,9vw,48px)}
+  .cloud3d:before{width:clamp(44px,13vw,66px);height:clamp(44px,13vw,66px);left:clamp(18px,4vw,28px);bottom:6px}
+  .cloud3d:after{width:clamp(34px,10vw,50px);height:clamp(34px,10vw,50px);right:clamp(12px,3vw,20px);bottom:6px}
+  .c1{left:clamp(-16px,0vw,8px);top:20%}
+  .c2{right:clamp(-16px,0vw,8px);top:17%}
+  .c3{left:7%;top:51%}
+  .c4{right:7%;top:49%}
+
+  /* Main title: fluid, centered, and never wider than the phone. */
+  .hero-title{
+    left:50%;top:39%;
+    width:min(88vw,440px);
+    padding:clamp(17px,4.5vw,24px) clamp(13px,4vw,24px);
+    border-radius:clamp(20px,5vw,28px);
+  }
+  .hero-title small{font-size:clamp(8px,2.5vw,11px);letter-spacing:clamp(1.5px,0.8vw,3px)}
+  .hero-title h1{font-size:clamp(28px,9.2vw,42px);line-height:1.1;margin:8px 0}
+  .hero-title h1 .line1{white-space:normal}
+  .hero-title p{font-size:clamp(10px,2.8vw,12px);line-height:1.55}
+
+  .bear-wrap{left:50%;top:86%;width:clamp(130px,38vw,180px)}
+  .bear{width:clamp(92px,28vw,125px);height:auto;max-height:170px}
+  .bear-wrap:before{width:clamp(135px,42vw,190px);height:clamp(135px,42vw,190px)}
+  .hand{font-size:clamp(21px,6vw,30px);right:-2px;top:42%}
+  .flower{width:clamp(82px,27vw,115px);top:0}
+  .flower.left{left:-2px}.flower.right{right:-2px}
+  .scroll{left:50%;bottom:7px;font-size:9px}
+
+  /* ================= OUR STORY ================= */
+  .story-grid{width:100%;max-width:430px;grid-template-columns:1fr;gap:clamp(18px,5vw,24px);margin-top:34px}
+  .story-card{width:100%;min-width:0}
+  .story-photo{height:auto;aspect-ratio:1.45/1;min-height:0}
+  .story-card h3{font-size:clamp(19px,5.5vw,24px)}
+  .story-card p{font-size:clamp(10px,2.9vw,12px);line-height:1.7}
+
+  /* ================= MEMORIES ================= */
+  .memories{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,3.5vw,16px);margin-top:32px}
+  .polaroid,.polaroid:nth-child(n){grid-column:span 1;margin-top:0;min-width:0;padding:8px 8px 20px}
+  .polaroid img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+  .polaroid figcaption{font-size:clamp(12px,3.8vw,16px);line-height:1.1}
+
+  /* ================= TIMELINE ================= */
+  .timeline{width:100%;margin:45px auto}
+  .timeline:before{left:14px;width:2px}
+  .event,.event:nth-child(even),.event:nth-child(odd){width:100%;margin:0;padding:0 0 clamp(38px,10vw,52px) 42px;text-align:left}
+  .event-dot{width:30px;height:30px;left:-1px!important;right:auto!important;font-size:12px}
+  .event .year{font-size:clamp(28px,9vw,38px)}
+  .event h3{font-size:clamp(16px,4.8vw,20px)}
+  .event p{font-size:clamp(10px,3vw,12px);line-height:1.75}
+
+  /* ================= FOR YOU ================= */
+  .for-you{width:100%;padding-inline:clamp(14px,4.5vw,24px)}
+  .letter{width:100%;max-width:850px;padding:clamp(34px,9vw,60px) clamp(18px,6vw,42px)}
+  .letter h2{font-size:clamp(42px,14vw,72px);line-height:1}
+  .letter p{font-size:clamp(11px,3.2vw,13px);line-height:1.8}
+}
+
+/* Very narrow phones */
+@media (max-width:360px){
+  nav{width:calc(100% - 10px);padding:6px 5px}
+  .navlinks{gap:1px}
+  .navlinks a{font-size:8px;padding:7px 5px}
+  .hero-scene{height:580px;min-height:560px}
+  .rainbow3d{width:94vw}
+  .hero-title{top:38%;width:90vw}
+  .hero-title h1{font-size:clamp(25px,9vw,32px)}
+  .flower{width:78px}
+  .bear-wrap{top:86%}
+  .memories{gap:9px}
+  .polaroid{padding:6px 6px 17px}
+}
+
+/* Large phones / small tablets */
+@media (min-width:481px) and (max-width:600px){
+  .hero-scene{height:clamp(650px,84svh,760px);min-height:650px}
+  .rainbow3d{width:min(94vw,650px)}
+  .hero-title{top:40%;width:min(82vw,470px)}
+  .bear-wrap{top:87%}
+  .story-grid{max-width:520px}
+}
+
+/* Landscape phones: use width as the limiting dimension so nothing is cropped. */
+@media (orientation:landscape) and (max-width:900px){
+  .hero{padding-top:58px}
+  .hero-scene{height:clamp(470px,92svh,650px);min-height:470px}
+  .rainbow3d{top:5px;width:min(78vw,560px)}
+  .hero-title{top:43%;width:min(55vw,430px);padding:14px 18px}
+  .hero-title h1{font-size:clamp(25px,5vw,38px)}
+  .bear-wrap{top:87%}
+  .flower{width:clamp(65px,15vw,100px)}
+}
+
+/* Modern mobile viewport safety */
+@supports (height: 100svh){
+  .hero{min-height:100svh}
+}
+@supports (padding: max(0px)){
+  nav{top:max(8px,env(safe-area-inset-top))}
+  .hero{padding-bottom:max(28px,env(safe-area-inset-bottom))}
 }
 </style>
 </head>
