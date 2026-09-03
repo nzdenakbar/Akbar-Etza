@@ -1036,6 +1036,104 @@ img, svg, video{
   }
 }
 
+
+/* =========================================================
+   FINAL MOBILE ALIGNMENT PATCH
+   - Bunga diperkecil supaya seluruh bentuk tetap terlihat.
+   - Bunga ditempel lebih masuk ke sudut kiri/kanan.
+   - Hero digeser sedikit ke kanan agar komposisi visual HP
+     tidak terasa berat di kiri.
+   ========================================================= */
+
+@media (min-width:601px){
+  .hero-scene{
+    left:8px;
+  }
+
+  .flower{
+    width:clamp(180px,19vw,245px);
+  }
+
+  .flower.left{left:-24px}
+  .flower.right{right:-24px}
+}
+
+@media (max-width:600px){
+  .hero-scene{
+    left:6px;
+    width:calc(100% - 6px);
+  }
+
+  /* Jangan terlalu besar: bunga cukup menjadi frame sudut,
+     tetapi bentuk utama tetap terlihat di layar HP. */
+  .flower{
+    width:clamp(125px,34vw,155px);
+    top:1%;
+  }
+
+  .flower.left{
+    left:-16px;
+  }
+
+  .flower.right{
+    right:-16px;
+  }
+
+  /* Sedikit geser komponen utama ke kanan, bukan seluruh body,
+     supaya tidak membuat halaman horizontal-scroll. */
+  .rainbow3d{
+    left:calc(50% + 3px);
+  }
+
+  .hero-title{
+    left:calc(50% + 3px);
+  }
+
+  .bear-wrap{
+    left:calc(50% + 3px);
+  }
+
+  .scroll{
+    left:calc(50% + 3px);
+  }
+
+  .c1{left:-18px}
+  .c2{right:-18px}
+  .c3{left:8px}
+  .c4{right:8px}
+}
+
+@media (max-width:380px){
+  .hero-scene{
+    left:4px;
+    width:calc(100% - 4px);
+  }
+
+  .flower{
+    width:125px;
+  }
+
+  .flower.left{left:-12px}
+  .flower.right{right:-12px}
+
+  .rainbow3d{
+    left:calc(50% + 2px);
+  }
+
+  .hero-title{
+    left:calc(50% + 2px);
+    width:calc(100% - 14px);
+  }
+
+  .bear-wrap{
+    left:calc(50% + 2px);
+  }
+
+  .scroll{
+    left:calc(50% + 2px);
+  }
+}
+
 </style>
 </head>
 <body class="locked">
