@@ -2409,10 +2409,10 @@ footer{
   flex:0 0 auto;
   position:relative;
   width:min(90vw,600px);
-  height:clamp(190px,40dvh,430px);
+  height:clamp(220px,46dvh,470px);
   margin:0;
-  -webkit-perspective:1200px;
-  perspective:1200px;
+  -webkit-perspective:900px;
+  perspective:900px;
   -webkit-perspective-origin:50% 45%;
   perspective-origin:50% 45%;
 }
@@ -2423,22 +2423,24 @@ footer{
   left:50%;
   width:0;
   height:0;
+  /* Love = matahari di bagian DALAM orbit.
+     Semua foto berada di atas layer ini sehingga love tidak pernah
+     menutupi kartu foto saat orbit berputar. */
+  z-index:5;
+  pointer-events:none;
+  filter:drop-shadow(0 0 14px rgba(255,79,156,.45));
   -webkit-transform-style:preserve-3d;
   transform-style:preserve-3d;
-  animation:heartCounterSpin 26s linear infinite;
-}
-
-@keyframes heartCounterSpin{
-  to{transform:rotateY(-360deg)}
+  animation:none;
 }
 
 .heart-planet{
   position:absolute;
   top:0;
   left:0;
-  width:100px;
-  height:90px;
-  transform:translate(-50%,-55%);
+  width:68px;
+  height:62px;
+  transform:translate(-50%,-50%);
   animation:heartPulse 3s ease-in-out infinite;
 }
 
@@ -2446,15 +2448,15 @@ footer{
 .heart-planet::after{
   content:"";
   position:absolute;
-  width:52px;
-  height:80px;
+  width:35px;
+  height:55px;
   border-radius:52px 52px 0 0;
   background:radial-gradient(circle at 30% 30%,#ffc4dd,#ff4f9c 60%,#a3164a);
   box-shadow:0 0 40px #ff4f9caa,0 0 90px #ff4f9c55;
 }
 
 .heart-planet::before{
-  left:48px;
+  left:33px;
   transform:rotate(-45deg);
   transform-origin:0 100%;
 }
@@ -2466,40 +2468,76 @@ footer{
 }
 
 @keyframes heartPulse{
-  50%{transform:translate(-50%,-55%) scale(1.06)}
+  50%{transform:translate(-50%,-50%) scale(1.06)}
+}
+
+/* Titik pusat 3D: glow dibuat lebih dalam agar love terasa berada
+   di dalam ruang orbit, bukan ditempel di atas foto. */
+.heart-planet-spin::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:116px;
+  height:116px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(255,111,168,.22) 0%,
+    rgba(255,79,156,.09) 34%,
+    transparent 70%);
+  filter:blur(8px);
+  z-index:-1;
 }
 
 .orbit-3d{
   position:absolute;
-  top:50%;
-  left:50%;
-  width:0;
-  height:0;
-  transform:translate(-50%,-50%);
-  -webkit-transform-style:preserve-3d;
-  transform-style:preserve-3d;
-  animation:orbit3dSpin 26s linear infinite;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:20;
+  pointer-events:none;
+  /*
+     Orbit foto sengaja ditempatkan DI DEPAN layer love.
+     Love tetap berada di pusat/dalam orbit dan tidak akan menutupi
+     foto ketika kartu melewati area tengah.
+     IMPORTANT: foto tidak lagi bergantung pada CSS 3D rotateY.
+     Posisi orbit dihitung dengan JavaScript sehingga Safari/Chrome
+     mobile di GitHub Pages tetap menampilkan gerakan orbit dengan stabil.
+  */
 }
 
-@keyframes orbit3dSpin{
-  to{transform:translate(-50%,-50%) rotateY(360deg)}
+/* Jalur lingkaran foto — pusatnya sama persis dengan hati. */
+.orbit-3d::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:clamp(210px,76vw,430px);
+  aspect-ratio:1 / .58;
+  transform:translate(-50%,-50%) rotateX(62deg);
+  transform-origin:center;
+  border:1px solid rgba(255,159,193,.18);
+  border-radius:50%;
+  box-shadow:0 0 35px rgba(255,79,156,.08),inset 0 0 35px rgba(255,79,156,.04);
+  pointer-events:none;
 }
 
 .orbit-card{
   position:absolute;
-  top:0;
-  left:0;
+  top:50%;
+  left:50%;
   width:clamp(52px,14vw,92px);
   height:clamp(70px,19vw,124px);
-  margin:
-    calc(clamp(70px,19vw,124px) / -2)
-    0
-    0
-    calc(clamp(52px,14vw,92px) / -2);
-  -webkit-transform-style:preserve-3d;
-  transform-style:preserve-3d;
-  transform:rotateY(var(--angle)) translateZ(var(--radius));
+  margin:0;
+  transform:translate3d(-50%,-50%,0);
+  transform-origin:center center;
+  will-change:transform;
+  pointer-events:auto;
+  /* Selalu di atas love: love berada di dalam orbit, bukan di depan foto. */
+  isolation:isolate;
 }
+
 
 .orbit-card-inner{
   position:relative;
@@ -2810,10 +2848,8 @@ footer{
     animasi orbit ini dikecualikan dari aturan reduce-motion supaya
     tetap berputar di HP yang mengaktifkan "Kurangi Gerakan".
   */
-  .orbit-3d,
   .heart-planet-spin{
-    animation-duration:26s !important;
-    animation-iteration-count:infinite !important;
+    animation:none !important;
   }
 }
 </style>
@@ -3246,11 +3282,10 @@ footer{
   <div class="planet-title">Our Little Planet ♡</div>
 
   <div class="planet-wrap" id="planetWrap">
-    <div class="orbit-3d" id="orbit3d">
-      <div class="heart-planet-spin">
-        <div class="heart-planet"></div>
-      </div>
+    <div class="heart-planet-spin" aria-hidden="true">
+      <div class="heart-planet"></div>
     </div>
+    <div class="orbit-3d" id="orbit3d" aria-label="Foto-foto kenangan yang mengorbit hati"></div>
   </div>
 
   <div class="planet-typewriter">
@@ -4081,6 +4116,7 @@ function initPolaroidReveal(){
 
 (function initPlanetScene(){
   const planetScene = $("#planetScene");
+  const planetWrap = $("#planetWrap");
   const orbit = $("#orbit3d");
   const planetClose = $("#planetClose");
   const typeText = $("#planetTypeText");
@@ -4155,21 +4191,94 @@ function initPolaroidReveal(){
     );
   }
 
+  let orbitAngle = 0;
+  let orbitFrame = 0;
+  let orbitLastTime = 0;
+  let orbitRunning = false;
+
+  function getOrbitRadius(){
+    const width = planetWrap?.clientWidth || window.innerWidth;
+    const height = planetWrap?.clientHeight || window.innerHeight * .46;
+    const small = window.innerWidth < 640;
+    // Radius horizontal. Dibuat jauh dari love agar love tetap menjadi
+    // "matahari" di pusat dan planet/foto benar-benar mengitarinya.
+    const maxR = Math.min(width * (small ? .43 : .40), height * (small ? .62 : .58));
+    return Math.max(94, Math.min(small ? 132 : 225, maxR));
+  }
+
+  function positionOrbitCards(){
+    const cards = $$('.orbit-card', orbit);
+    if(!cards.length) return;
+
+    const radius = getOrbitRadius();
+    // Bidang orbit dimiringkan seperti tata surya 3D.
+    const tilt = (62 * Math.PI) / 180;
+    const rx = radius;
+    const ry = radius * .92;
+    const rz = radius * .72;
+
+    cards.forEach((card) => {
+      const base = Number(card.dataset.baseAngle || 0);
+      const theta = (base + orbitAngle) * Math.PI / 180;
+
+      // Titik pada lingkaran 3D: X/Y kemudian diputar pada sumbu X.
+      const localX = Math.cos(theta) * rx;
+      const localY = Math.sin(theta) * ry;
+      const x = localX;
+      const y = localY * Math.cos(tilt);
+      const z = localY * Math.sin(tilt);
+
+      // Perspective asli browser: benda yang mendekati kamera membesar,
+      // benda yang menjauh mengecil. Ini yang membuat orbit terasa 3D.
+      const depth = (z + rz) / (2 * rz);
+      const scale = .72 + depth * .34;
+      const opacity = .48 + depth * .52;
+
+      card.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), ${z}px) scale(${scale})`;
+      card.style.zIndex = String(20 + Math.round(depth * 160));
+      card.style.opacity = String(opacity);
+    });
+  }
+
+  function animateOrbit(time){
+    if(!orbitRunning) return;
+    if(!orbitLastTime) orbitLastTime = time;
+
+    const delta = Math.min(50, time - orbitLastTime);
+    orbitLastTime = time;
+
+    // Satu putaran sekitar 22 detik — cukup jelas di HP, tetapi tetap lembut.
+    orbitAngle = (orbitAngle + delta * (360 / 22000)) % 360;
+    positionOrbitCards();
+    orbitFrame = requestAnimationFrame(animateOrbit);
+  }
+
+  function startOrbit(){
+    if(orbitRunning) return;
+    orbitRunning = true;
+    orbitLastTime = 0;
+    cancelAnimationFrame(orbitFrame);
+    orbitFrame = requestAnimationFrame(animateOrbit);
+  }
+
+  function stopOrbit(){
+    orbitRunning = false;
+    cancelAnimationFrame(orbitFrame);
+    orbitFrame = 0;
+    orbitLastTime = 0;
+  }
+
   function buildOrbit(){
     if(ringsBuilt) return;
 
     ringsBuilt = true;
-
-    const small = window.innerWidth < 640;
-    const radius = small ? 95 : 220;
 
     ORBIT_IMAGES.forEach((src, index) => {
       const angle = (360 / ORBIT_IMAGES.length) * index;
 
       const card = document.createElement("div");
       card.className = "orbit-card";
-      card.style.setProperty("--angle", `${angle}deg`);
-      card.style.setProperty("--radius", `${radius}px`);
+      card.dataset.baseAngle = String(angle);
 
       const inner = document.createElement("div");
       inner.className = "orbit-card-inner";
@@ -4181,6 +4290,8 @@ function initPolaroidReveal(){
       const image = document.createElement("img");
       image.src = src;
       image.alt = "";
+      image.loading = "eager";
+      image.decoding = "async";
 
       front.appendChild(image);
 
@@ -4192,8 +4303,9 @@ function initPolaroidReveal(){
       card.appendChild(inner);
       orbit.appendChild(card);
     });
-  }
 
+    positionOrbitCards();
+  }
   function replayPhotoEntrance(){
     $$(".orbit-card-inner").forEach(card => {
       card.style.animation = "none";
@@ -4252,6 +4364,8 @@ function initPolaroidReveal(){
 
     planetScene.classList.add("show");
     planetScene.setAttribute("aria-hidden","false");
+    positionOrbitCards();
+    startOrbit();
     document.body.classList.add("locked");
 
     startTypewriter();
@@ -4265,11 +4379,17 @@ function initPolaroidReveal(){
   planetClose.addEventListener("click", () => {
     planetScene.classList.remove("show");
     planetScene.setAttribute("aria-hidden","true");
+    stopOrbit();
     document.body.classList.remove("locked");
 
     clearTimeout(shootingTimer);
     clearTimeout(typeTimer);
   });
+
+  window.addEventListener("resize", () => {
+    if(planetScene.classList.contains("show")) positionOrbitCards();
+  }, {passive:true});
+
 })();
 
 /* =========================================================
