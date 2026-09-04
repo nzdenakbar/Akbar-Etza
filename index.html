@@ -258,37 +258,126 @@ main,
   display:none;
 }
 
-/* ===== BUNGA PIN & TEBAK-TEBAKAN ===== */
-.gate-floral-frame{
+/* ===== KUPU-KUPU 3D DI PIN & TEBAK-TEBAKAN ===== */
+.gate-butterfly{
   position:absolute;
-  inset:-18px -24px;
+  top:-24px;
+  right:-16px;
   z-index:1;
+  width:64px;
+  height:56px;
+  perspective:240px;
   pointer-events:none;
+  animation:butterflyFloat 3.2s ease-in-out infinite;
 }
-.gate-floral-frame img{
+.gate-butterfly.left{
+  right:auto;
+  left:-16px;
+}
+.butterfly-body{
   position:absolute;
-  width:clamp(72px,22vw,105px);
-  max-width:none;
-  filter:drop-shadow(0 10px 9px #0006);
-  opacity:.96;
+  left:50%;
+  top:10%;
+  width:4px;
+  height:70%;
+  border-radius:3px;
+  background:linear-gradient(#4a3050,#241228);
+  transform:translateX(-50%);
+  z-index:2;
+  box-shadow:0 0 4px #0007;
 }
-.gate-floral-frame .gate-flower-left{
-  left:0;
-  top:50%;
-  transform:translateY(-50%) rotate(-8deg);
+.butterfly-body::before{
+  content:"";
+  position:absolute;
+  top:-6px;
+  left:50%;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#2f1a35;
+  transform:translateX(-50%);
 }
-.gate-floral-frame .gate-flower-right{
-  right:0;
-  top:50%;
-  transform:translateY(-50%) scaleX(-1) rotate(-8deg);
+.butterfly-body::after{
+  content:"";
+  position:absolute;
+  top:-9px;
+  left:50%;
+  width:14px;
+  height:6px;
+  border-top:1.5px solid #a684c9;
+  border-radius:50% 50% 0 0;
+  transform:translateX(-50%);
 }
-.gate-box > :not(.gate-floral-frame){
+.butterfly-wing{
+  position:absolute;
+  top:8%;
+  width:28px;
+  height:24px;
+  opacity:.94;
+  background:linear-gradient(135deg,#ff8db8,#c583ff 60%,#ffd17b);
+  box-shadow:0 0 10px #ff8db366,inset 0 0 8px #ffffff55;
+}
+.wing-left-top{
+  left:50%;
+  border-radius:0 100% 40% 100%;
+  transform-origin:right center;
+  background:linear-gradient(135deg,#ff8db8,#c583ff 60%,#ffd17b);
+  animation:flapLeftTop .85s ease-in-out infinite;
+}
+.wing-right-top{
+  left:50%;
+  border-radius:100% 0 100% 40%;
+  transform-origin:left center;
+  background:linear-gradient(225deg,#ff8db8,#c583ff 60%,#ffd17b);
+  animation:flapRightTop .85s ease-in-out infinite;
+}
+.wing-left-bottom{
+  left:50%;
+  top:42%;
+  width:20px;
+  height:18px;
+  border-radius:0 100% 100% 40%;
+  transform-origin:right center;
+  background:linear-gradient(135deg,#ffb0d3,#a173ff);
+  animation:flapLeftBottom .85s ease-in-out infinite;
+}
+.wing-right-bottom{
+  left:50%;
+  top:42%;
+  width:20px;
+  height:18px;
+  border-radius:100% 0 40% 100%;
+  transform-origin:left center;
+  background:linear-gradient(225deg,#ffb0d3,#a173ff);
+  animation:flapRightBottom .85s ease-in-out infinite;
+}
+@keyframes flapLeftTop{
+  0%,100%{transform:translateX(-100%) rotateY(12deg)}
+  50%{transform:translateX(-100%) rotateY(150deg)}
+}
+@keyframes flapRightTop{
+  0%,100%{transform:translateX(0) rotateY(-12deg)}
+  50%{transform:translateX(0) rotateY(-150deg)}
+}
+@keyframes flapLeftBottom{
+  0%,100%{transform:translateX(-100%) rotateY(16deg)}
+  50%{transform:translateX(-100%) rotateY(125deg)}
+}
+@keyframes flapRightBottom{
+  0%,100%{transform:translateX(0) rotateY(-16deg)}
+  50%{transform:translateX(0) rotateY(-125deg)}
+}
+@keyframes butterflyFloat{
+  0%,100%{transform:translateY(0) rotate(-4deg)}
+  50%{transform:translateY(-9px) rotate(4deg)}
+}
+.gate-box > :not(.gate-butterfly){
   position:relative;
   z-index:2;
 }
 @media(max-width:420px){
-  .gate-floral-frame{inset:-14px -13px;}
-  .gate-floral-frame img{width:clamp(62px,20vw,88px);}
+  .gate-butterfly{width:52px;height:46px;top:-18px;right:-10px}
+  .gate-butterfly.left{left:-10px}
 }
 
 .gate-box::before{
@@ -897,15 +986,15 @@ main,
 .hero-scene{
   position:relative;
   width:min(1200px,100%);
-  height:clamp(520px,86dvh,760px);
-  min-height:500px;
+  height:clamp(560px,92dvh,800px);
+  min-height:540px;
 }
 
 .hero-title{
   position:absolute;
   z-index:30;
   left:50%;
-  top:39%;
+  top:30%;
   width:min(92%,460px);
   padding:clamp(16px,4vw,26px) clamp(14px,4vw,30px);
   border:3px solid #fff5;
@@ -1008,9 +1097,9 @@ main,
   position:absolute;
   z-index:3;
   left:50%;
-  top:2%;
+  top:1%;
   width:min(94vw,900px);
-  height:min(47vw,450px);
+  height:min(40vw,400px);
   transform:translateX(-50%);
 }
 
@@ -1100,7 +1189,7 @@ main,
   position:absolute;
   z-index:20;
   left:50%;
-  top:77%;
+  top:63%;
   width:min(42vw,260px);
   min-width:150px;
   text-align:center;
@@ -1110,7 +1199,7 @@ main,
 
 @media(min-width:760px){
   .bear-wrap{
-    top:71%;
+    top:60%;
     width:min(30vw,260px);
   }
 }
@@ -1145,6 +1234,8 @@ main,
   height:auto;
   max-height:190px;
   object-fit:contain;
+  margin:0 auto;
+  display:block;
   filter:drop-shadow(0 20px 14px #0008);
   animation:bob 4s ease-in-out infinite;
 }
@@ -1257,50 +1348,127 @@ main,
   to{transform:translateY(9px);opacity:0}
 }
 
+/* =========================================================
+   MUSIC BOX — cassette style
+   ========================================================= */
+
 .music-box{
   position:absolute;
   left:50%;
-  top:105%;
+  top:112%;
   z-index:25;
-  width:min(270px,78vw);
+  width:min(240px,76vw);
   min-width:0;
   display:flex;
-  align-items:center;
-  gap:9px;
-  padding:9px 10px;
+  flex-direction:column;
+  gap:7px;
+  padding:11px 12px 10px;
   border:1px solid #ffb7d355;
-  border-radius:18px;
-  background:linear-gradient(145deg,#fff0f7ee,#f8d9e9dd);
-  box-shadow:0 12px 26px #0006,0 0 20px #ff8fbd22;
-  backdrop-filter:blur(10px);
+  border-radius:16px;
+  background:linear-gradient(155deg,#33162f,#180a1c);
+  box-shadow:0 14px 30px #0007,0 0 20px #ff8fbd22,0 0 0 1px #ffffff08 inset;
   transform:translateX(-50%);
 }
 
-.music-box-icon{
-  width:36px;
-  height:36px;
-  flex:0 0 36px;
-  display:grid;
-  place-items:center;
-  border-radius:11px;
-  background:#ffffffaa;
-  font-size:18px;
-}
-
-.music-box-copy{
-  min-width:0;
-  flex:1;
-  color:#7b3657;
-  text-align:left;
+.cassette-window{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:50px;
+  padding:0 12px;
+  border-radius:9px;
+  background:linear-gradient(160deg,#efe2d8,#d9c7ba);
+  box-shadow:inset 0 2px 4px #0004,inset 0 -2px 3px #fff6;
   overflow:hidden;
 }
 
-.music-box-copy strong{
-  display:block;
+.cassette-window::before{
+  content:"";
+  position:absolute;
+  left:8%;
+  right:8%;
+  top:14%;
+  height:3px;
+  border-radius:2px;
+  background:#0000000f;
+}
+
+.cassette-tape{
+  position:absolute;
+  left:15%;
+  right:15%;
+  top:50%;
+  height:6px;
+  background:#3a2b22;
+  border-radius:3px;
+  transform:translateY(-50%);
+  box-shadow:inset 0 0 4px #0006;
+}
+
+.cassette-reel{
+  position:relative;
+  z-index:2;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#6a5747,#2a2019 70%);
+  box-shadow:0 0 0 3px #00000022,inset 0 0 0 2px #00000055;
+}
+
+.cassette-reel::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:50%;
+  background:repeating-conic-gradient(#9a8272 0deg 30deg,#5b4b40 30deg 60deg);
+}
+
+.cassette-reel::after{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border-radius:50%;
+  background:#1c1410;
+}
+
+.music-box.playing .cassette-reel{
+  animation:reelSpin 1.5s linear infinite;
+}
+
+@keyframes reelSpin{
+  to{transform:rotate(360deg)}
+}
+
+.cassette-label{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 2px;
+  color:#f4d7e6;
+}
+
+.cassette-label strong{
+  min-width:0;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-  font:700 12px Fredoka,sans-serif;
+  font:700 11.5px Fredoka,sans-serif;
+}
+
+.cassette-label span{
+  flex:0 0 auto;
+  color:#c99fb9;
+  font:600 9px Fredoka,sans-serif;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+
+.music-box-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .music-box button{
@@ -2243,7 +2411,9 @@ footer{
   width:min(90vw,600px);
   height:clamp(190px,40dvh,430px);
   margin:0;
+  -webkit-perspective:1200px;
   perspective:1200px;
+  -webkit-perspective-origin:50% 45%;
   perspective-origin:50% 45%;
 }
 
@@ -2253,6 +2423,7 @@ footer{
   left:50%;
   width:0;
   height:0;
+  -webkit-transform-style:preserve-3d;
   transform-style:preserve-3d;
   animation:heartCounterSpin 26s linear infinite;
 }
@@ -2305,6 +2476,7 @@ footer{
   width:0;
   height:0;
   transform:translate(-50%,-50%);
+  -webkit-transform-style:preserve-3d;
   transform-style:preserve-3d;
   animation:orbit3dSpin 26s linear infinite;
 }
@@ -2324,6 +2496,7 @@ footer{
     0
     0
     calc(clamp(52px,14vw,92px) / -2);
+  -webkit-transform-style:preserve-3d;
   transform-style:preserve-3d;
   transform:rotateY(var(--angle)) translateZ(var(--radius));
 }
@@ -2332,6 +2505,7 @@ footer{
   position:relative;
   width:100%;
   height:100%;
+  -webkit-transform-style:preserve-3d;
   transform-style:preserve-3d;
   animation:cardPopIn .7s cubic-bezier(.2,.8,.2,1) var(--pop-delay,0ms) backwards;
 }
@@ -2347,6 +2521,7 @@ footer{
   overflow:hidden;
   border:3px solid #fff;
   border-radius:12px;
+  -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
   box-shadow:0 0 22px #ff6fa8cc,0 0 0 2px #ff9fc155;
 }
@@ -2595,26 +2770,26 @@ footer{
   }
 
   .hero-scene{
-    min-height:470px;
-    height:78dvh;
+    min-height:520px;
+    height:82dvh;
   }
 
   .hero-title{
-    top:37%;
+    top:28%;
     width:94%;
   }
 
   .rainbow3d{
-    top:4%;
+    top:3%;
     width:98vw;
   }
 
   .bear-wrap{
-    top:74%;
+    top:60%;
   }
 
   .music-box{
-    width:min(250px,86vw);
+    width:min(220px,86vw);
   }
 }
 
@@ -2627,6 +2802,18 @@ footer{
     animation-duration:.01ms !important;
     animation-iteration-count:1 !important;
     transition-duration:.01ms !important;
+  }
+
+  /*
+    Foto-foto di planet BUKAN sekadar dekorasi — kalau di-freeze,
+    fotonya jadi diam total (bukan cuma "lebih pelan"). Jadi khusus
+    animasi orbit ini dikecualikan dari aturan reduce-motion supaya
+    tetap berputar di HP yang mengaktifkan "Kurangi Gerakan".
+  */
+  .orbit-3d,
+  .heart-planet-spin{
+    animation-duration:26s !important;
+    animation-iteration-count:infinite !important;
   }
 }
 </style>
@@ -2643,9 +2830,12 @@ footer{
   <span class="gate-spark" style="left:50%;top:80%;font-size:13px;animation-duration:8s;animation-delay:2s">💗</span>
 
   <div class="gate-box">
-    <div class="gate-floral-frame" aria-hidden="true">
-      <img class="gate-flower-left" src="images/bungakiri.png" alt="">
-      <img class="gate-flower-right" src="images/bungakiri.png" alt="">
+    <div class="gate-butterfly" aria-hidden="true">
+      <span class="butterfly-body"></span>
+      <span class="butterfly-wing wing-left-top"></span>
+      <span class="butterfly-wing wing-right-top"></span>
+      <span class="butterfly-wing wing-left-bottom"></span>
+      <span class="butterfly-wing wing-right-bottom"></span>
     </div>
     <div class="gate-kicker">✦ private space ✦</div>
     <div class="gate-icon">🔒</div>
@@ -2678,9 +2868,12 @@ footer{
   <span class="gate-spark" style="left:80%;top:70%;font-size:15px;animation-duration:7s;animation-delay:1.2s">♥</span>
 
   <div class="gate-box">
-    <div class="gate-floral-frame" aria-hidden="true">
-      <img class="gate-flower-left" src="images/bungakiri.png" alt="">
-      <img class="gate-flower-right" src="images/bungakiri.png" alt="">
+    <div class="gate-butterfly left" aria-hidden="true">
+      <span class="butterfly-body"></span>
+      <span class="butterfly-wing wing-left-top"></span>
+      <span class="butterfly-wing wing-right-top"></span>
+      <span class="butterfly-wing wing-left-bottom"></span>
+      <span class="butterfly-wing wing-right-bottom"></span>
     </div>
     <div class="gate-kicker">✦ verifikasi lucu ✦</div>
     <div class="gate-icon">🍽️</div>
@@ -2801,11 +2994,18 @@ footer{
         <div class="speech">our story is this way ♡</div>
 
         <div class="music-box" id="musicBox">
-          <div class="music-box-icon">🎵</div>
-          <div class="music-box-copy">
-            <strong>Our Little Song ♡</strong>
+          <div class="cassette-window">
+            <div class="cassette-reel" id="reelLeft"></div>
+            <div class="cassette-tape"></div>
+            <div class="cassette-reel" id="reelRight"></div>
           </div>
-          <button type="button" id="cuteMusicBtn" aria-label="Putar atau jeda lagu">▶</button>
+          <div class="cassette-label">
+            <strong>Our Little Song ♡</strong>
+            <span>Side A</span>
+          </div>
+          <div class="music-box-controls">
+            <button type="button" id="cuteMusicBtn" aria-label="Putar atau jeda lagu">▶</button>
+          </div>
         </div>
       </div>
 
@@ -3123,6 +3323,7 @@ for(let i = 0; i < 38; i++){
 const song = $("#song");
 const musicBtn = $("#musicBtn");
 const cuteMusicBtn = $("#cuteMusicBtn");
+const musicBoxEl = $("#musicBox");
 
 function syncMusicButtons(){
   const playing = !song.paused;
@@ -3133,6 +3334,10 @@ function syncMusicButtons(){
 
   if(cuteMusicBtn){
     cuteMusicBtn.textContent = playing ? "❚❚" : "▶";
+  }
+
+  if(musicBoxEl){
+    musicBoxEl.classList.toggle("playing", playing);
   }
 }
 
@@ -4096,8 +4301,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
-<style>
-/* Scroll-down indicator removed for a cleaner hero */
-.scroll{display:none !important}
-</style>
